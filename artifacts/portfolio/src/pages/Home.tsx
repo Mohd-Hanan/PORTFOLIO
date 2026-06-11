@@ -200,10 +200,10 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative">
       {/* Background decoration */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-grid opacity-100" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-primary/[0.06] blur-[120px]" />
-        <div className="absolute top-1/3 right-0 w-[500px] h-[400px] rounded-full bg-blue-500/[0.04] blur-[100px]" />
-        <div className="absolute bottom-1/4 left-0 w-[400px] h-[300px] rounded-full bg-primary/[0.04] blur-[90px]" />
+        <div className="absolute inset-0 bg-grid" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-primary/[0.05] dark:bg-primary/[0.08] blur-[120px]" />
+        <div className="absolute top-1/3 right-0 w-[500px] h-[400px] rounded-full bg-blue-500/[0.04] dark:bg-blue-500/[0.05] blur-[100px]" />
+        <div className="absolute bottom-1/4 left-0 w-[400px] h-[300px] rounded-full bg-primary/[0.03] dark:bg-primary/[0.05] blur-[90px]" />
       </div>
 
       {/* NAV */}

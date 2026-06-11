@@ -218,6 +218,11 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
     background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, hsla(258, 72%, 58%, 0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, hsla(199, 72%, 50%, 0.04) 0%, transparent 60%);
+  }
+  .dark body {
+    background-image:
       radial-gradient(ellipse 80% 50% at 50% -20%, hsla(258, 80%, 30%, 0.18) 0%, transparent 70%),
       radial-gradient(ellipse 60% 40% at 80% 60%, hsla(199, 80%, 30%, 0.08) 0%, transparent 60%);
   }
@@ -233,6 +238,13 @@
   }
 
   .gradient-text {
+    background: linear-gradient(135deg, hsl(258 72% 45%) 0%, hsl(199 72% 38%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dark .gradient-text {
     background: linear-gradient(135deg, hsl(258 80% 72%) 0%, hsl(199 80% 70%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -240,10 +252,18 @@
   }
 
   .glow-border {
-    box-shadow: 0 0 0 1px hsla(258, 80%, 66%, 0.2), 0 4px 24px hsla(258, 80%, 66%, 0.08);
+    box-shadow: 0 0 0 1px hsla(258, 72%, 58%, 0.18), 0 4px 24px hsla(258, 72%, 58%, 0.06);
   }
 
   .glow-border:hover {
+    box-shadow: 0 0 0 1px hsla(258, 72%, 58%, 0.35), 0 4px 32px hsla(258, 72%, 58%, 0.12);
+  }
+
+  .dark .glow-border {
+    box-shadow: 0 0 0 1px hsla(258, 80%, 66%, 0.2), 0 4px 24px hsla(258, 80%, 66%, 0.08);
+  }
+
+  .dark .glow-border:hover {
     box-shadow: 0 0 0 1px hsla(258, 80%, 66%, 0.4), 0 4px 32px hsla(258, 80%, 66%, 0.15);
   }
 
@@ -252,6 +272,13 @@
   }
 
   .bg-grid {
+    background-image:
+      linear-gradient(hsla(258, 72%, 50%, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, hsla(258, 72%, 50%, 0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .dark .bg-grid {
     background-image:
       linear-gradient(hsla(258, 80%, 66%, 0.04) 1px, transparent 1px),
       linear-gradient(90deg, hsla(258, 80%, 66%, 0.04) 1px, transparent 1px);
