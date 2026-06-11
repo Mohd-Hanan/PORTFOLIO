@@ -2,20 +2,11 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster as SonnerToaster } from "sonner";
 import NotFound from "@/pages/not-found";
+import Home from "@/pages/Home";
 
 const queryClient = new QueryClient();
-
-function Home() {
-  return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-gray-900">Replit Agent is building...</h1>
-        <p className="mt-2 text-sm text-gray-600">Your app will appear here once it's ready.</p>
-      </div>
-    </div>
-  );
-}
 
 function Router() {
   return (
@@ -34,6 +25,16 @@ function App() {
           <Router />
         </WouterRouter>
         <Toaster />
+        <SonnerToaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: "hsl(225 14% 9%)",
+              border: "1px solid hsl(225 12% 15%)",
+              color: "hsl(220 20% 92%)",
+            },
+          }}
+        />
       </TooltipProvider>
     </QueryClientProvider>
   );

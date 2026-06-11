@@ -1,44 +1,63 @@
-# [Project name]
+# Muhammed Hanan PP — Portfolio
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A professional dark-themed portfolio website for Muhammed Hanan PP, a 2nd-year BTech CS (AI) student at TKM College of Engineering.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080, served at `/api`)
+- `pnpm --filter @workspace/portfolio run dev` — run the portfolio frontend
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Required env: `GMAIL_USER` — Gmail address used to send contact form emails (set to mohdhanan197@gmail.com)
+- Required secret: `GMAIL_APP_PASSWORD` — Gmail App Password for sending emails via Nodemailer
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React + Vite + Tailwind CSS v4 + framer-motion + wouter
+- API: Express 5 + Nodemailer (contact form)
+- No database needed — portfolio is frontend-only except for the contact email endpoint
+- Build: esbuild (API), Vite (frontend)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/portfolio/src/pages/Home.tsx` — entire single-page portfolio (all sections)
+- `artifacts/portfolio/src/App.tsx` — router + providers + Sonner toaster
+- `artifacts/portfolio/src/index.css` — theme tokens (dark space-black + purple/violet accent)
+- `artifacts/api-server/src/routes/contact.ts` — POST /api/contact endpoint (sends email via Nodemailer)
+- `lib/api-spec/openapi.yaml` — OpenAPI spec (only health check; contact form uses direct fetch)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Portfolio is a single-page app — all sections use anchor scroll, no routing.
+- Contact form POSTs directly to `/api/contact` (no generated hooks — not needed for a single form endpoint).
+- Email is sent via Gmail SMTP with a Gmail App Password (16-char app-specific password, not regular Gmail password).
+- No database — portfolio content is static in the component file.
+- Sonner toast library used for success/error feedback on form submit.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+A professional portfolio website showcasing:
+- Hero with name, role, bio, and skill badges
+- About section with stats (3 projects, 3 certs, 4th semester, 2 team lead roles)
+- Education (BTech CS AI at TKM College of Engineering 2024-2028)
+- Skills (Programming, Technologies, Concepts)
+- Three projects (PowerGuard, Customer Segmentation, Water Level Monitor)
+- Three NPTEL certifications
+- Contact section with email, GitHub, and a working contact form
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Email: mohdhanan197@gmail.com (no phone number shown)
+- Dark theme default, space-black background with purple/violet accent (#7c5cfc range)
+- Professional tone — no emojis in UI
+- Contact form sends email to mohdhanan197@gmail.com via Gmail SMTP
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The Gmail App Password must be a 16-character app-specific password from Google Account > Security > App passwords. Regular Gmail password will NOT work.
+- `GMAIL_USER` is a non-secret env var (set to mohdhanan197@gmail.com). `GMAIL_APP_PASSWORD` is a secret.
+- The contact route is at `POST /api/contact` — frontend uses a direct `fetch()` call, not a generated hook.
 
 ## Pointers
 

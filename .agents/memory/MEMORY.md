@@ -1,0 +1,1 @@
+- [Portfolio contact form email setup](portfolio-email.md) — Gmail SMTP via Nodemailer; needs GMAIL_APP_PASSWORD secret (16-char app password, not regular password)
