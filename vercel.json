@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "pnpm run build",
-  "outputDirectory": "dist",
-  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter @workspace/portfolio build",
+  "outputDirectory": "artifacts/portfolio/dist/public",
+  "installCommand": "pnpm install --no-frozen-lockfile",
   "rewrites": [{"source": "/(.*)", "destination": "/"}]
 }
