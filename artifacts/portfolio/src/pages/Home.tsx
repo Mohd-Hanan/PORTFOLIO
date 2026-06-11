@@ -23,6 +23,7 @@ import {
   Sun,
   Moon,
   CheckCircle2,
+  House,
 } from "lucide-react";
 
 const fadeUp = {
@@ -210,10 +211,10 @@ export default function Home() {
           <a
             href="#hero"
             onClick={(e) => { e.preventDefault(); scrollTo("#hero"); }}
-            className="font-display font-bold text-base tracking-tight"
+            className="p-2 rounded-md text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
+            aria-label="Home"
           >
-            <span className="text-foreground">HOME</span>
-            <span className="text-primary">.</span>
+            <House size={22} />
           </a>
 
           <ul className="hidden md:flex items-center gap-1">
