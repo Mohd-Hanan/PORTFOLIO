@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import emailjs from "@emailjs/browser";
 import {
   Mail,
   Github,
@@ -128,15 +129,34 @@ function useScrollSpy() {
   return active;
 }
 
+interface EmailJSConfig {
+  emailjsPublicKey: string;
+  emailjsServiceId: string;
+  emailjsTemplateId: string;
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [ejsConfig, setEjsConfig] = useState<EmailJSConfig | null>(null);
   const active = useScrollSpy();
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
+
+  useEffect(() => {
+    fetch("/api/config")
+      .then((r) => r.json())
+      .then((cfg: EmailJSConfig) => {
+        if (cfg.emailjsPublicKey) {
+          emailjs.init({ publicKey: cfg.emailjsPublicKey });
+        }
+        setEjsConfig(cfg);
+      })
+      .catch(() => {});
+  }, []);
 
   const form = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
@@ -144,14 +164,21 @@ export default function Home() {
   });
 
   async function onSubmit(data: ContactForm) {
+    if (!ejsConfig?.emailjsPublicKey) {
+      toast.error("Email service not ready. Please try again in a moment.");
+      return;
+    }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed");
+      await emailjs.send(
+        ejsConfig.emailjsServiceId,
+        ejsConfig.emailjsTemplateId,
+        {
+          from_name: data.name,
+          from_email: data.email,
+          message: data.message,
+        }
+      );
       toast.success("Message sent! I'll reply within a day or two.");
       form.reset();
     } catch {
