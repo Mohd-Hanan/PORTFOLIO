@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import profilePhoto from "../assets/profile.png";
 import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -339,11 +340,12 @@ export default function Home() {
             >
               <div className="relative">
                 <div className="absolute -inset-3 rounded-full bg-gradient-to-br from-primary/30 to-blue-500/20 blur-2xl" />
-                <div className="relative w-52 h-52 md:w-64 md:h-64 rounded-full border-2 border-primary/30 bg-gradient-to-br from-primary/20 to-blue-600/20 flex items-center justify-center overflow-hidden glow-border">
-                  <div className="absolute inset-0 bg-gradient-to-br from-violet-900/60 via-blue-900/40 to-indigo-900/60" />
-                  <span className="relative font-display text-5xl md:text-6xl font-bold gradient-text select-none">
-                    MH
-                  </span>
+                <div className="relative w-52 h-52 md:w-64 md:h-64 rounded-full border-2 border-primary/30 overflow-hidden glow-border">
+                  <img
+                    src={profilePhoto}
+                    alt="Muhammed Hanan PP"
+                    className="w-full h-full object-cover object-top"
+                  />
                   <div className="absolute inset-0 rounded-full ring-1 ring-primary/20" />
                 </div>
                 <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-card border border-border rounded-full text-xs text-muted-foreground whitespace-nowrap font-medium">
