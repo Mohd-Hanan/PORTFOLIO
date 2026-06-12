@@ -27,6 +27,11 @@ import {
   House,
 } from "lucide-react";
 
+const EJS_SERVICE_ID = "service_z4cpmem";
+const EJS_TEMPLATE_ID = "template_0kuoago";
+const EJS_PUBLIC_KEY = "KNybrAWGAS1fmlkxj";
+emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
@@ -131,34 +136,15 @@ function useScrollSpy() {
   return active;
 }
 
-interface EmailJSConfig {
-  emailjsPublicKey: string;
-  emailjsServiceId: string;
-  emailjsTemplateId: string;
-}
-
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [ejsConfig, setEjsConfig] = useState<EmailJSConfig | null>(null);
   const active = useScrollSpy();
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
-
-  useEffect(() => {
-    fetch("/api/config")
-      .then((r) => r.json())
-      .then((cfg: EmailJSConfig) => {
-        if (cfg.emailjsPublicKey) {
-          emailjs.init({ publicKey: cfg.emailjsPublicKey });
-        }
-        setEjsConfig(cfg);
-      })
-      .catch(() => {});
-  }, []);
 
   const form = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
@@ -166,21 +152,13 @@ export default function Home() {
   });
 
   async function onSubmit(data: ContactForm) {
-    if (!ejsConfig?.emailjsPublicKey) {
-      toast.error("Email service not ready. Please try again in a moment.");
-      return;
-    }
     setSubmitting(true);
     try {
-      await emailjs.send(
-        ejsConfig.emailjsServiceId,
-        ejsConfig.emailjsTemplateId,
-        {
-          from_name: data.name,
-          from_email: data.email,
-          message: data.message,
-        }
-      );
+      await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+        from_name: data.name,
+        from_email: data.email,
+        message: data.message,
+      });
       toast.success("Message sent! I'll reply within a day or two.");
       form.reset();
     } catch {
